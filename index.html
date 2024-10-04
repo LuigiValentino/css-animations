@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Animaciones CSS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .animation-preview {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            margin: auto;
+        }
+        .layout-container {
+            display: flex;
+            flex-direction: row;
+            height: calc(100vh - 100px);
+        }
+        .sidebar {
+            flex: 1;
+            padding: 20px;
+            background: #f7f7f7;
+            border-right: 1px solid #ccc;
+        }
+        .main-content {
+            flex: 3;
+            padding: 20px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-content {
+            display: flex;
+            height: calc(100% - 50px);
+        }
+        .tab {
+            width: 50%;
+            padding: 10px;
+        }
+        .section-title {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .section-paragraph {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .section-link {
+            color: #3498db;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <header class="text-center py-4 ">
+        <h1 class="text-3xl font-bold text-left pl-4">Generador de Animaciones CSS</h1>
+    </header>
+    <div class="layout-container">
+        <div class="sidebar">
+            <h2 class="text-xl font-bold mb-4">Customización de la Animación</h2>
+            <form id="animationForm">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Animación:</label>
+                    <input type="text" id="name" name="name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="duration" class="block text-gray-700 text-sm font-bold mb-2">Duración (s):</label>
+                    <input type="number" id="duration" name="duration" step="0.1" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="delay" class="block text-gray-700 text-sm font-bold mb-2">Retraso (s):</label>
+                    <input type="number" id="delay" name="delay" step="0.1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="timingFunction" class="block text-gray-700 text-sm font-bold mb-2">Función de Temporización:</label>
+                    <select id="timingFunction" name="timingFunction" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="ease">ease</option>
+                        <option value="linear">linear</option>
+                        <option value="ease-in">ease-in</option>
+                        <option value="ease-out">ease-out</option>
+                        <option value="ease-in-out">ease-in-out</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="transform" class="block text-gray-700 text-sm font-bold mb-2">Transformación:</label>
+                    <input type="text" id="transform" name="transform" placeholder="e.g., translateX(100px)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="iterationCount" class="block text-gray-700 text-sm font-bold mb-2">Repetición:</label>
+                    <input type="number" id="iterationCount" name="iterationCount" step="1" value="1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="direction" class="block text-gray-700 text-sm font-bold mb-2">Dirección:</label>
+                    <select id="direction" name="direction" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="normal">normal</option>
+                        <option value="reverse">reverse</option>
+                        <option value="alternate">alternate</option>
+                        <option value="alternate-reverse">alternate-reverse</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="playState" class="block text-gray-700 text-sm font-bold mb-2">Estado:</label>
+                    <select id="playState" name="playState" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="running">running</option>
+                        <option value="paused">paused</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="color" class="block text-gray-700 text-sm font-bold mb-2">Color del Elemento:</label>
+                    <input type="color" id="color" name="color" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="shape" class="block text-gray-700 text-sm font-bold mb-2">Forma del Elemento:</label>
+                    <div class="controls">
+                        <button type="button" id="shape-square" class="bg-white border rounded w-10 h-10"><i class="fas fa-square"></i></button>
+                        <button type="button" id="shape-circle" class="bg-white border rounded w-10 h-10"><i class="fas fa-circle"></i></button>
+                        <input type="hidden" id="shape" name="shape" value="square">
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="main-content">
+            <div class="controls">
+                <button type="button" id="runAnimation" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Correr Animación <i class="fas fa-play"></i></button>
+                <button type="button" id="downloadCode" class="bg-blue-500 hover:bg-blue-700  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Descargar Código <i class="fas fa-download"></i></button>
+                <select id="predefinedAnimations" class="bg-white border rounded px-4 py-2">
+                    <option value="" disabled selected>Dropdown de Predefinido</option>
+                    <option value="bounce">Bounce</option>
+                    <option value="rotate">Rotate</option>
+                    <option value="scale">Scale</option>
+                    <option value="fade">Fade</option>
+                    <option value="slide">Slide</option>
+                </select>
+            </div>
+            <div class="tab-content">
+                <div class="tab" id="generatedCodeTab">
+                    <h2 class="text-xl font-bold mb-4">CSS <i class="fab fa-css3-alt" style="color: #3498db;"></i></h2>
+                    <pre id="generatedCode" class=" p-4 rounded h-full bg-gray-800 text-white border-double border-4 border-sky-500"></pre>
+                </div>
+                <div class="tab" id="previewTab">
+                    <h2 class="text-xl font-bold mb-4 ">Live Preview <i class="fas fa-circle-dot" style="color: red;"></i></h2>
+                    <div class="animation-preview  " id="previewElement"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <script src="./script.js"></script>
+</body>
+</html>
